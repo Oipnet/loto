@@ -16,7 +16,7 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     env:
-      CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
+      CADDY_MERCURE_JWT_SECRET: ${{ secrets.production.CADDY_MERCURE_JWT_SECRET }}
     steps:
       -
         name: Checkout
