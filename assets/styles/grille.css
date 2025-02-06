@@ -1,0 +1,165 @@
+.grille {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    height: 100vh;
+    background-image: url("./boules.png");
+}
+
+.grille .container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    flex-direction: row;
+    align-items: center;
+}
+
+.grille .game {
+
+    height: 100vh;
+}
+
+.grille .game-info {
+    width: 25%; /* Largeur fixe pour l'aside */
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column; /* Disposition en colonne */
+    justify-content: space-between; /* Distribue l'espace verticalement */
+    background-color: #ffffff;
+    border-left: 1px solid #bdc3c7;
+    padding: 20px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.grille .game-info h2 {
+    font-size: 2.2rem;
+}
+
+.grille .game-info p {
+    font-size: 1.2rem;
+}
+
+.grille .game-info h2,
+.grille .game-info p {
+    margin: 0; /* Supprime les marges par défaut */
+}
+
+.grille .game-info .info-number {
+    flex-grow: 1; /* Permet à cet élément d'occuper tout l'espace restant */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11rem; /* Taille de police pour l'information */
+    color: #34495e;
+    border-radius: 8px;
+}
+
+.grille .game-info .info-item {
+    margin-top: auto; /* Pousse cet élément vers le bas */
+}
+
+.grille .game-info #next-lot {
+    font-size: 1rem;
+    color: #7f8c8d;
+}
+
+.grille .token-container {
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Pour le jeton */
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes moveCurve {
+    0% {
+        transform: translate(0, 0); /* Début de l'animation */
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--final-x), var(--final-y)); /* Destination finale */
+        opacity: 1;
+    }
+}
+
+.grille .token {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(243, 156, 18, .9);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0); /* Taille initiale */
+    opacity: 0; /* Invisible au départ */
+    position: absolute; /* Position libre pour le déplacement */
+    z-index: 10;
+    transition: opacity 0.5s ease-out; /* Animation d'apparition */
+}
+
+.grille .token.animate-scale {
+    animation: scaleUp 0.5s ease-out forwards; /* Animation d'apparition */
+}
+
+.grille .token.animate-curve {
+    animation: moveCurve 1.5s cubic-bezier(0.2, 1, 0.8, 1) forwards; /* Animation courbe */
+}
+
+.grille .grid-container {
+    width: 100%; /* Grille occupant 75% de la largeur */
+    height: 80vh; /* Hauteur complète */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grille .grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 5px;
+    width: 90%; /* Réduction pour un espace visuel */
+    height: 90%; /* Réduction pour un espace visuel */
+    background-color: #ecf0f1;
+    opacity: 85%;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grille .cell {
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.grille .cell.highlight {
+    background-color: rgba(46, 204, 113, .8);
+    color: white;
+}

@@ -1,0 +1,48 @@
+framework:
+    workflows: 
+        game_preparing:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            supports:
+                - App\Entity\Game
+            places:
+                - 'En préparation'
+                - 'En attente'
+                - 'En cours'
+                - 'Terminé'
+            initial_marking: 'En préparation'
+            marking_store:
+                type: 'method'
+                property: 'currentState'
+            transitions:
+                to_pending:
+                    from: 'En préparation'
+                    to: 'En attente'
+                to_in_progress:
+                    from: 'En attente'
+                    to: 'En cours'
+                to_in_finish:
+                    from: 'En cours'
+                    to: 'Terminé'
+        prize_lifecycle:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            supports:
+                - App\Entity\Prize
+            places:
+                - 'En attente'
+                - 'En cours'
+                - 'Terminé'
+            initial_marking: 'En attente'
+            marking_store:
+                type: 'method'
+                property: 'currentState'
+            transitions:
+                to_in_progress:
+                    from: 'En attente'
+                    to: 'En cours'
+                to_in_finish:
+                    from: 'En cours'
+                    to: 'Terminé'

@@ -1,0 +1,17 @@
+<div class="flex flex-col justify-between p-4 border rounded-lg shadow bg-white">
+    <div class="min-w-0">
+        <div class="flex items-start gap-x-3">
+            <p class="text-sm/6 font-semibold text-gray-900">{{ prize.title }}</p>
+        </div>
+        <div class="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
+            <p class="whitespace-nowrap">
+                {{ prize.description }}
+            </p>
+        </div>
+        <div class="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
+            <p class="whitespace-nowrap">
+                {{ prize.price | number_format(2, ',', ' ') }} €
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<main class="py-10">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl pb-4">{{ game.name }}</h1>
+        {% if workflow_can(game, 'to_pending') %}
+            <a href="{{ path('app_game_edit', { game: game.slug }) }}"
+               class="mr-2 rounded-md bg-indigo-50 px-3 py-2 font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100"
+            >
+                Modifier
+            </a>
+            <a
+                href="{{ path('app_game_next', { game: game.slug }) }}"
+                class="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+            >Finaliser</a>
+        {% endif %}
+        {% if workflow_can(game, 'to_in_progress') %}
+            <a
+                href="{{ path('app_game_next', { game: game.slug }) }}"
+                class="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+            >Commencer</a>
+        {% endif %}
+    </div>
+    <div class="grid grid-cols-4 gap-4 m-4 px-4 sm:px-6 lg:px-8">
+        {% for prize in game.prizes %}
+            {% include 'partials/games/prize/_item_list.html.twig' with { prize: prize} %}
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

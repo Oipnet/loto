@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<main class="py-10">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl pb-4">Organisation</h1>
+        <ul role="list" class="divide-y divide-gray-100">
+            {% for game in games %}
+                {% include 'partials/games/_item_list.html.twig' with { game: game} %}
+            {% endfor %}
+        </ul>
+        <a href="{{ path('app_game_create') }}" type="button" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Créer une partie</a>
+    </div>
+</main>
+{% endblock %}

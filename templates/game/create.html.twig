@@ -1,0 +1,12 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<main class="py-10">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl pb-4">Créer un nouveau Loto</h1>
+        {% include 'partials/games/_form.html.twig' with { form: form} %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layouts/anonymous.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    {% set baseUrl = app.request.getSchemeAndHttpHost() %}
+    <script type="application/json" id="mercure-url">
+      {{ mercure([
+            baseUrl ~ '/game',
+            baseUrl ~ '/game/{slug}/prize/{slug}',
+            baseUrl ~ '/game/{slug}/prize/{id}/next',
+            baseUrl ~ '/game/{game}/prize/{prize}/resend'
+        ])|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="grille" {{ stimulus_controller('grid') }}>
+        <div class="game">
+            <div id="token-container" class="token-container"></div>
+            <div class="grid-container">
+                <div
+                    class="grid"
+                    id="grid"
+                    {{ stimulus_target('grid', 'grid') }}
+                ></div>
+            </div>
+        </div>
+        <aside id="game-info" class="game-info">
+            <h2 id="prize-title" class="hidden"></h2>
+            <p id="prize-winning-condition" class="hidden"></p>
+            <p id="prize-description" class="hidden"></p>
+            <div class="info-number"></div>
+            <div class="info-item hidde">
+                <strong>A venir :</strong>
+                <span id="next-prize"></span>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

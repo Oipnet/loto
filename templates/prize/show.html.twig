@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<main class="py-10">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl pb-4">{{ prize.title }}</h1>
+        <h2 class="text-2xl mb-4">Tirage</h2>
+        <ul class="flex flex-row mb-8">
+            {% for number in prize.prizeNumbers %}
+                <li class="mr-2 rounded-full w-[40px] h-[40px] bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-bold text-center">
+                    {{ number.number }}
+                </li>
+            {% endfor %}
+        </ul>
+        {% include 'partials/prizes/_form.html.twig' with { form: form} %}
+    </div>
+    <div class="px-4 sm:px-6 lg:px-8 flex flex-row gap-2 my-2 text-center">
+        <a href="{{ path('app_prize_next', { game: prize.game.slug, prize: prize.slug }) }}"
+           class="block w-1/2 rounded-md bg-indigo-50 px-3 py-2 font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">
+            Lot suivant
+        </a>
+        <a href="{{ path('app_prize_resend', { game: prize.game.slug, prize: prize.slug }) }}"
+           class="block w-1/2 rounded-md bg-indigo-50 px-3 py-2 font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">
+            Recharger la grille
+        </a>
+</main>
+{% endblock %}

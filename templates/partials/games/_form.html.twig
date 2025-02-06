@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+<div>
+    {{ form_label(form.name) }}
+    <div class="mt-2">
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name, {
+            'attr': { 'class': 'mt-1 text-sm text-red-600' }
+        }) }}
+    </div>
+</div>
+<div>
+    {{ form_label(form.date) }}
+    <div class="mt-2">
+        {{ form_widget(form.date) }}
+        {{ form_errors(form.date, {
+            'attr': { 'class': 'mt-1 text-sm text-red-600' }
+        }) }}
+    </div>
+</div>
+<div
+    class="mt-6"
+    {{ stimulus_controller('prize-collection') }}
+    data-prize-collection-index-value="{{ form.prizes|length > 0 ? form.prizes|last.vars.name + 1 : 0 }}"
+    data-prize-collection-prototype-value="{{ form_widget(form.prizes.vars.prototype)|e('html_attr') }}"
+>
+    <ul {{ stimulus_target('prize-collection', 'prizeContainer') }}>
+        {% for prize in form.prizes %}
+            <li>
+                {{ form_row(prize) }}
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="mt-6">
+        <a
+            type="button"
+            class="w-full hover:cursor-pointer inline-flex justify-center mb-2 rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            {{ stimulus_action('click->prize-collection', 'addPrizeElement') }}
+        >Ajouter un lot</a>
+        <button type="submit"
+                class="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Enregistrer
+        </button>
+    </div>
+</div>
+{{ form_row(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
