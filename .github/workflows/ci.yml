@@ -40,12 +40,8 @@ jobs:
       -
         name: Start services
         run: |
-          touch .env
-          echo "CADDY_MERCURE_JWT_SECRET=${CADDY_MERCURE_JWT_SECRET}" > .env
-          pwd
-          ls -al
-          cat .env
-          docker compose -f compose.yaml -f compose.prod.yaml up --wait --no-build
+          docker compose -f compose.yaml -f compose.prod.yaml up --wait --no-build \
+            -e CADDY_MERCURE_JWT_SECRET=${CADDY_MERCURE_JWT_SECRET}
       -
         name: Check HTTP reachability
         if: false
