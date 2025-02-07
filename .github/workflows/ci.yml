@@ -32,6 +32,7 @@ jobs:
         with:
           pull: true
           load: true
+          no-cache: true
           files: |
             compose.yaml
             compose.override.yaml
