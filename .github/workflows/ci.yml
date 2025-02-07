@@ -18,6 +18,7 @@ jobs:
     environment: production
     env:
       CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
     steps:
       -
         name: Checkout
@@ -38,14 +39,11 @@ jobs:
             *.cache-from=type=gha,scope=${{github.ref}}
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
-      - name: Debug Environment Variables
-        run: |
-          echo "CADDY_MERCURE_JWT_SECRET is: ${CADDY_MERCURE_JWT_SECRET}"
-          env | grep CADDY_MERCURE_JWT_SECRET
       -
         name: Start services
         env:
           CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
         run: |
           docker compose -f compose.yaml -f compose.prod.yaml up --wait --no-build
       -
