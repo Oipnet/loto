@@ -41,6 +41,7 @@ jobs:
         name: Start services
         run: |
           echo "CADDY_MERCURE_JWT_SECRET=${CADDY_MERCURE_JWT_SECRET}" > .env
+          cat .env
           docker compose -f compose.yaml -f compose.prod.yaml up --wait --no-build
       -
         name: Check HTTP reachability
