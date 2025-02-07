@@ -15,6 +15,7 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+    environment: production
     env:
       CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
     steps:
