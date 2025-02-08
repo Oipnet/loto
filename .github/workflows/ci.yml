@@ -105,6 +105,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Create deployment script
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           cat << 'EOF' > deploy.sh
           #!/bin/bash
@@ -150,9 +152,13 @@ jobs:
           chmod +x deploy.sh
 
       - name: Copy script to VPS
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         run: scp -P 2222 deploy.sh $SSH_USER@$SERVER_IP:/home/$SSH_USER/deploy.sh
 
       - name: Execute deployment script on VPS
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         run: ssh -p 2222 $SSH_USER@$SERVER_IP 'bash /home/$SSH_USER/deploy.sh'
     env:
       CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
