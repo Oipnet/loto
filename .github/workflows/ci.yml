@@ -152,10 +152,10 @@ jobs:
       - name: Copy script to VPS
         run: |
           ssh -o "StrictHostKeyChecking=no" -p 2222 $SSH_USER@$SERVER_IP "echo 'SSH OK'"
-          scp -o "StrictHostKeyChecking=no" -P 2222 deploy.sh $SSH_USER@$SERVER_IP:/home/$SSH_USER/deploy.sh
+          scp -o "StrictHostKeyChecking=no" -P 2222 deploy.sh $SSH_USER@$SERVER_IP:/home/forelse/deploy.sh
       
       - name: Execute deployment script on VPS
-        run: ssh -p 2222 $SSH_USER@$SERVER_IP 'bash /home/$SSH_USER/deploy.sh'
+        run: ssh -p 2222 $SSH_USER@$SERVER_IP 'bash /home/forelse/deploy.sh'
     env:
       CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
