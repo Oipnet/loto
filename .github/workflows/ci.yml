@@ -126,7 +126,7 @@ jobs:
           echo "📦 Mise à jour du code..."
           cd /opt/app
           if [ ! -d ".git" ]; then
-            git clone git@github.com:Oipnet/loto.git .
+            git clone https://github.com/Oipnet/loto.git .
           else
             git pull origin main
           fi
