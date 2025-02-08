@@ -106,9 +106,16 @@ jobs:
 
       - name: Deploy Application
         env:
+          CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SERVER_NAME: ${{ vars.SERVER_NAME }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          APP_ENV: ${{ vars.APP_ENV }}
+          DATABASE_URL: "postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@database:5432/${{ secrets.POSTGRES_DB }}?serverVersion=16&charset=utf8"
         run: |
           ssh -o StrictHostKeyChecking=no -p 2222 $SSH_USER@$SERVER_IP << 'EOF'
           set -e  # Stop en cas d'erreur
