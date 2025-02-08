@@ -111,7 +111,8 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
+      - name: Debug environment variables
+        run: env | grep CADDY_MERCURE_JWT_SECRET
       - name: Deploy Application
         env:
           CADDY_MERCURE_JWT_SECRET: ${{ secrets.CADDY_MERCURE_JWT_SECRET }}
