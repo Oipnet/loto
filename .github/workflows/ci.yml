@@ -111,25 +111,35 @@ jobs:
           SERVER_NAME: ${{ vars.SERVER_NAME }}
         run: |
           ssh -o StrictHostKeyChecking=no -p 2222 $SSH_USER@$SERVER_IP << 'EOF'
-          set -e  # Arrêter l’exécution si une commande échoue
-          
+          set -e  # Stop en cas d'erreur
+
+          echo "📦 Vérification du dossier..."
+          if [ ! -d "/opt/app" ]; then
+            echo "🛠 Création du dossier /opt/app..."
+            sudo mkdir -p /opt/app
+            sudo chown -R www-data:www-data /opt/app
+            sudo chmod 750 /opt/app
+            sudo setfacl -m u:$SSH_USER:rwx /opt/app
+            sudo setfacl -d -m u:$SSH_USER:rwx /opt/app
+          fi
+
           echo "📦 Mise à jour du code..."
-          cd /opt/app || (mkdir -p /opt/app && cd /opt/app)
+          cd /opt/app
           if [ ! -d ".git" ]; then
             git clone git@github.com:Oipnet/loto.git .
           else
             git pull origin main
           fi
-          
+
           echo "🐳 Mise à jour des images Docker..."
           docker compose -f compose.yaml -f compose.prod.yaml pull
-          
+
           echo "🚀 Lancement de l’application..."
           APP_ENV=prod CADDY_MERCURE_JWT_SECRET=${{ secrets.CADDY_MERCURE_JWT_SECRET }} \
           POSTGRES_DB=${{ secrets.POSTGRES_DB }} POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} APP_SECRET=${{ secrets.APP_SECRET }} \
           DATABASE_URL="postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@database:5432/${{ secrets.POSTGRES_DB }}?serverVersion=16&charset=utf8" \
           docker compose -f compose.yaml -f compose.prod.yaml up -d --build
-          
+
           echo "✅ Déploiement terminé avec succès !"
           EOF
