@@ -128,7 +128,16 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p 2222 $SSH_USER@$SERVER_IP << 'EOF'
           set -e  # Stop en cas d'erreur
+          
+          export CADDY_MERCURE_JWT_SECRET=${CADDY_MERCURE_JWT_SECRET}
+          export APP_SECRET=${APP_SECRET}
+          export POSTGRES_DB=${POSTGRES_DB}
+          export POSTGRES_USER=${POSTGRES_USER}
+          export POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
+          echo "📦 Vérification des variables sur le serveur..."
+          env | grep CADDY_MERCURE_JWT_SECRET
+          
           echo "📦 Vérification du dossier..."
           if [ ! -d "/opt/app" ]; then
             echo "🛠 Création du dossier /opt/app..."
