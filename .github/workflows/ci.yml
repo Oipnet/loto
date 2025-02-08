@@ -148,6 +148,10 @@ jobs:
           fi
 
           echo "🐳 Mise à jour des images Docker..."
+          APP_ENV=prod CADDY_MERCURE_JWT_SECRET=${{ secrets.CADDY_MERCURE_JWT_SECRET }} \
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }} POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} APP_SECRET=${{ secrets.APP_SECRET }} \
+          DATABASE_URL="postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@database:5432/${{ secrets.POSTGRES_DB }}?serverVersion=16&charset=utf8" \
           sudo docker compose -f compose.yaml -f compose.prod.yaml build
 
           echo "🚀 Lancement de l’application..."
