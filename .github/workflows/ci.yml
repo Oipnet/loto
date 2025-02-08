@@ -124,6 +124,7 @@ jobs:
           fi
 
           echo "📦 Mise à jour du code..."
+          git config --global --add safe.directory /opt/app
           cd /opt/app
           if [ ! -d ".git" ]; then
             git clone https://github.com/Oipnet/loto.git .
